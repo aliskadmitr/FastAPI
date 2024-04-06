@@ -13,10 +13,9 @@ class TaskRepository:
 
             task = TaskOrm(**task_dict)
             session.add(task)
-            await session.flush()   #отправит изменения в базу
+            await session.flush()  # отправит изменения в базу
             await session.commit()
             return task.id
-
 
     @classmethod
     async def find_all(cls, task_model=None) -> list[STask]:
