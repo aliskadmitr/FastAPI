@@ -1,4 +1,4 @@
-from numpy import select
+from sqlalchemy import select
 
 from database import new_session, TaskOrm
 
