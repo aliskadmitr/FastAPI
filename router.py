@@ -16,7 +16,7 @@ async def add_task(
         task: Annotated[STaskAdd, Depends()],
 ) -> STaskId:
     task_id = await TaskRepository.add_one(task)
-    return {"ok": True, "task_id": task_id}
+    return STask(id=task_id, time=task.time, emotion=task.emotion)
 
 
 @router.get("")

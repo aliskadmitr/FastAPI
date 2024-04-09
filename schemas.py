@@ -4,8 +4,8 @@ from pydantic import BaseModel, ConfigDict
 
 
 class STaskAdd(BaseModel):
-    name: str
-    description: Optional[str] = None
+    time: int
+    emotion: Optional[str] = None
 
 
 class STask(STaskAdd):
@@ -14,5 +14,5 @@ class STask(STaskAdd):
     model_config = ConfigDict(from_attributes=True)
 
 class STaskId(BaseModel):
-    ok: bool = True
-    task_id: int
+    id: int
+    advice: str

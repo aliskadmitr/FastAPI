@@ -1,5 +1,4 @@
 
-
 from fastapi import FastAPI
 
 
@@ -8,8 +7,7 @@ from database import create_tables, delete_tables
 from router import router as tasks_router
 
 
-
-#context manager
+# context manager
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     await delete_tables()

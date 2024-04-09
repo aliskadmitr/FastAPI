@@ -7,9 +7,9 @@ from schemas import STask, STaskAdd
 
 class TaskRepository:
     @classmethod
-    async def add_one(cls, task: STaskAdd) -> int:
+    async def add_one(cls, data: STaskAdd) -> int:
         async with new_session() as session:
-            task_dict = task.model_dump()
+            task_dict = data.model_dump()
 
             task = TaskOrm(**task_dict)
             session.add(task)
