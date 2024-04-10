@@ -1,4 +1,4 @@
-
+import uvicorn
 from fastapi import FastAPI
 
 
@@ -18,5 +18,7 @@ async def lifespan(app: FastAPI):
     print("Выключение")
 
 
-app = FastAPI(lifespan=lifespan)
-app.include_router(tasks_router)
+if __name__ == "__main__":
+    app = FastAPI(lifespan=lifespan)
+    app.include_router(tasks_router)
+    uvicorn.run(app, host="0.0.0.0", port=8000)

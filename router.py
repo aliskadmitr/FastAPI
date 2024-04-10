@@ -2,6 +2,7 @@ from typing import Annotated
 
 from fastapi import APIRouter, Depends
 
+from prediction.pred import get_recommendation
 from repository import TaskRepository
 from schemas import STaskAdd, STask, STaskId
 
@@ -14,7 +15,7 @@ router = APIRouter(
 @router.post("")
 async def add_task(
         task: Annotated[STaskAdd, Depends()],
-) -> STaskId:
+) -> STask:
     task_id = await TaskRepository.add_one(task)
     return STask(id=task_id, time=task.time, emotion=task.emotion)
 
