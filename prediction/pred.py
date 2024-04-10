@@ -1,3 +1,5 @@
+import string
+
 import pandas as pd
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
@@ -23,11 +25,11 @@ for i in range(1000):
 
     if time < 18000 and emotional_state in ["нейтрально", "весело"]:
         recommendation = 2
-    elif time < 18000 and emotional_state == "грустно":
+    elif time < 18000 and emotional_state in ["грустно", None]:
         recommendation = 1
-    elif time >= 18000 and emotional_state == "грустно":
+    elif time >= 18000 and emotional_state in ["грустно", None]:
         recommendation = 1
-    elif time >= 18000 and emotional_state == "весело":
+    elif time >= 18000 and emotional_state in ["весело", None]:
         recommendation = 0
     else:
         recommendation = random.choice([0, 1])
@@ -57,13 +59,31 @@ recommendations = {
 
 
 def get_recommendation(data):
-    y_pred = model.predict([data['time'], data['emotion']])
+    emotional_state = random.choice(["весело", "нейтрально", "грустно"])
 
-    for pred_class in y_pred:
-        if pred_class in recommendations:
-            recommendations_for_class = recommendations[pred_class]
-            random_recommendation = random.choice(recommendations_for_class)
-            print("Рекомендация для сотрудника:", random_recommendation)
-        else:
-            print("Класс рекомендации не найден в словаре")
+    # "отдыхать" -> 0
+    # "перерыв" -> 1
+    # "работать" -> 2
+
+    if time < 18000 and emotional_state in ["нейтрально", "весело"]:
+        recommendation = 2
+    elif time < 18000 and emotional_state in ["грустно", None]:
+        recommendation = 1
+    elif time >= 18000 and emotional_state in ["грустно", None]:
+        recommendation = 1
+    elif time >= 18000 and emotional_state in ["весело", None]:
+        recommendation = 0
+    else:
+        recommendation = random.choice([0, 1])
+    recommendations_for_class = recommendations[recommendation]
+    random_recommendation = random.choice(recommendations_for_class)
+    # y_pred = model.predict([data.time, data.emotion])
+    #
+    # for pred_class in y_pred:
+    #     if pred_class in recommendations:
+    #         recommendations_for_class = recommendations[pred_class]
+    #         random_recommendation = random.choice(recommendations_for_class)
+    #         print("Рекомендация для сотрудника:", random_recommendation)
+    #     else:
+    #         print("Класс рекомендации не найден в словаре")
     return random_recommendation
